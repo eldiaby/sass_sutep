@@ -50,9 +50,6 @@ sass/
 - Run the script using the command:
   sass_setup.bat
 
-markdown
-Copy
-
 #### **2. On Linux/macOS**:
 
 - Download the `sass_setup.sh` script.
