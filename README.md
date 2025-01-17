@@ -10,38 +10,36 @@ The scripts will create the following **SASS** folder and file structure:
 sass/
 │
 ├── base/
-│   ├── _base.scss        # Base styles
-│   ├── _reset.scss       # Reset/normalize
-│   ├── _typography.scss  # Typography rules
-│   └── _utilities.scss   # Utility classes
+│ ├── \_base.scss # Base styles
+│ ├── \_reset.scss # Reset/normalize
+│ ├── \_typography.scss # Typography rules
+│ └── \_utilities.scss # Utility classes
 │
 ├── components/
-│   └── _buttons.scss     # Buttons styles
+│ └── \_buttons.scss # Buttons styles
 │
 ├── layout/
-│   ├── _header.scss      # Header styles
-│   ├── _footer.scss      # Footer styles
-│   └── _sidebar.scss     # Sidebar styles
+│ ├── \_header.scss # Header styles
+│ ├── \_footer.scss # Footer styles
+│ └── \_sidebar.scss # Sidebar styles
 │
 ├── pages/
-│   ├── _home.scss        # Home page styles
-│   └── _contact.scss     # Contact page styles
+│ ├── \_home.scss # Home page styles
+│ └── \_contact.scss # Contact page styles
 │
-├── themes/               # Folder for themes
+├── themes/ # Folder for themes
 │
 ├── utils/
-│   ├── _functions.scss   # SASS functions
-│   ├── _helpers.scss     # Helper classes
-│   ├── _mixins.scss      # Mixins
-│   └── _variables.scss   # Variables
+│ ├── \_functions.scss # SASS functions
+│ ├── \_helpers.scss # Helper classes
+│ ├── \_mixins.scss # Mixins
+│ └── \_variables.scss # Variables
 │
 ├── vendors/
-│   └── _bootstrap.scss   # Vendor-specific styles (e.g., Bootstrap)
+│ └── \_bootstrap.scss # Vendor-specific styles (e.g., Bootstrap)
 │
-├── style.scss            # Main file where all the imports are included
-└── .gitignore            # (Optional, for version control)
-
-
+├── style.scss # Main file where all the imports are included
+└── .gitignore # (Optional, for version control)
 
 ## How to Use:
 
