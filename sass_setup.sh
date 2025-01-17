@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# This script creates all necessary files for SASS using 7-1 Pattern
+# SASS Automatic Setup (7-1 Pattern)
 
-echo "================================"
+echo "============================"
 echo "SASS AUTOMATIC SETUP (7-1 Pattern)"
-echo "================================"
+echo "============================"
 echo ""
 echo "This script will create the necessary folders and files for your SASS project using the 7-1 pattern."
 echo ""
-read -p "Press any key to continue..."
+echo "Please wait... Creating folders and files."
 
-# Save the current directory path to return after completion
-ORIGINAL_DIR=$(pwd)
+# Save the current directory path where the script is located
+SCRIPT_DIR=$(pwd)
 
 # Check if the root SASS folder exists and create it
 echo ""
@@ -168,7 +168,7 @@ else
     echo "+ _utilities.scss created successfully."
 fi
 
-# _base.scss
+# _base.scss (New file added)
 if [ -f "base/_base.scss" ]; then
     echo "- _base.scss already exists"
 else
@@ -178,7 +178,7 @@ fi
 
 echo "-------------------"
 
-# Create components files
+# Create files in components folder
 echo ""
 echo "Creating files in components folder..."
 echo "-------------------"
@@ -290,23 +290,7 @@ fi
 # Write the @use imports into style.scss
 echo ""
 echo "Adding @use imports into style.scss..."
-{
-    echo '@use "abstracts/functions";'
-    echo '@use "abstracts/mixins";'
-    echo '@use "abstracts/variables";'
-    echo '@use "base/reset";'
-    echo '@use "base/typography";'
-    echo '@use "base/utilities";'
-    echo '@use "base/base";'
-    echo '@use "components/buttons";'
-    echo '@use "layout/header";'
-    echo '@use "layout/footer";'
-    echo '@use "layout/sidebar";'
-    echo '@use "pages/home";'
-    echo '@use "pages/contact";'
-    echo '@use "utils/helpers";'
-    echo '@use "vendors/bootstrap";'
-} >> style.scss
+echo -e "@use \"abstracts/functions\";\n@use \"abstracts/mixins\";\n@use \"abstracts/variables\";\n@use \"base/reset\";\n@use \"base/typography\";\n@use \"base/utilities\";\n@use \"base/base\";\n@use \"components/buttons\";\n@use \"layout/header\";\n@use \"layout/footer\";\n@use \"layout/sidebar\";\n@use \"pages/home\";\n@use \"pages/contact\";\n@use \"utils/helpers\";\n@use \"vendors/bootstrap\";" >> style.scss
 
 echo "-------------------"
 
@@ -318,7 +302,41 @@ echo "All necessary @use imports have been added to your style.scss file."
 echo "You can now modify these imports as needed."
 echo ""
 
-# Return to the original directory
-cd "$ORIGINAL_DIR"
+# Ask the user what to do with this script
+echo ""
+echo "What would you like to do with the \`sass_setup.sh\` file?"
+echo "1. Delete the file"
+echo "2. Add it to .gitignore"
+echo "3. Leave it as is"
+read -p "Enter your choice (1, 2, or 3): " choice
 
-read -p "Press any key to exit..."
+if [ "$choice" -eq 1 ]; then
+    rm -- "$0"
+    echo "The file has been deleted."
+fi
+
+if [ "$choice" -eq 2 ]; then
+    echo "Checking for .gitignore file..."
+    if [ -f "$SCRIPT_DIR/.gitignore" ]; then
+        # If .gitignore exists, add sass_setup.sh to it if not already present
+        if ! grep -Fxq "sass_setup.sh    # SASS setup shell script" "$SCRIPT_DIR/.gitignore"; then
+            echo "sass_setup.sh    # SASS setup shell script" >> "$SCRIPT_DIR/.gitignore"
+            echo "sass_setup.sh has been added to .gitignore with a comment."
+        else
+            echo "sass_setup.sh is already in .gitignore."
+        fi
+    else
+        # If .gitignore does not exist, create it and add sass_setup.sh
+        echo "sass_setup.sh    # SASS setup shell script" > "$SCRIPT_DIR/.gitignore"
+        echo ".gitignore file created and sass_setup.sh has been added to it with a comment."
+    fi
+fi
+
+if [ "$choice" -eq 3 ]; then
+    echo "The file will remain as is."
+fi
+
+# Return to the original directory
+cd "$SCRIPT_DIR"
+
+echo "Script finished."

@@ -12,8 +12,8 @@ ECHO/
 PAUSE
 ECHO Please wait... Creating folders and files.
 
-:: Save current directory path to return after completion
-SET "ORIGINAL_DIR=%CD%"
+:: Save the current directory path where the script is located
+SET "SCRIPT_DIR=%CD%"
 
 :: Check if the root SASS folder exists and create it
 ECHO/
@@ -299,7 +299,7 @@ ECHO Adding @use imports into style.scss...
     echo @use "base/reset";
     echo @use "base/typography";
     echo @use "base/utilities";
-    echo @use "base/base";  :: Added _base.scss
+    echo @use "base/base";
     echo @use "components/buttons";
     echo @use "layout/header";
     echo @use "layout/footer";
@@ -320,7 +320,43 @@ ECHO All necessary @use imports have been added to your style.scss file.
 ECHO You can now modify these imports as needed.
 ECHO/
 
+:: Ask the user what to do with this script
+ECHO/
+ECHO What would you like to do with the `sass_setup.bat` file?
+ECHO 1. Delete the file
+ECHO 2. Add it to .gitignore
+ECHO 3. Leave it as is
+
+SET /P choice="Enter your choice (1, 2, or 3): "
+
+IF "%choice%"=="1" (
+    DEL /F /Q "%~f0"
+    ECHO The file has been deleted.
+)
+
+IF "%choice%"=="2" (
+    ECHO Checking for .gitignore file...
+    IF EXIST "%SCRIPT_DIR%\.gitignore" (
+        :: If .gitignore exists, add sass_setup.bat to it if not already present
+        FINDSTR /C:"sass_setup.bat" "%SCRIPT_DIR%\.gitignore" > NUL
+        IF ERRORLEVEL 1 (
+            echo sass_setup.bat    :: SASS setup batch file >> "%SCRIPT_DIR%\.gitignore"
+            ECHO sass_setup.bat has been added to .gitignore with a comment.
+        ) ELSE (
+            ECHO sass_setup.bat is already in .gitignore.
+        )
+    ) ELSE (
+        :: If .gitignore does not exist, create it and add sass_setup.bat
+        echo sass_setup.bat    :: SASS setup batch file > "%SCRIPT_DIR%\.gitignore"
+        ECHO .gitignore file created and sass_setup.bat has been added to it with a comment.
+    )
+)
+
+IF "%choice%"=="3" (
+    ECHO The file will remain as is.
+)
+
 :: Return to the original directory
-cd /d "%ORIGINAL_DIR%"
+cd /d "%SCRIPT_DIR%"
 
 PAUSE
